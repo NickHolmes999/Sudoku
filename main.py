@@ -125,6 +125,45 @@ def handle_puzzle():
                 # The selected cell is already filled, so clear the selection
                 selected_row = None
                 selected_col = None
+        elif event.type == pygame.KEYDOWN:
+            if selected_row is not None and selected_col is not None:
+                if event.key == pygame.K_KP1 or event.key == pygame.K_1:
+                    number = 1
+                elif event.key == pygame.K_KP2 or event.key == pygame.K_2:
+                    number = 2
+                elif event.key == pygame.K_KP3 or event.key == pygame.K_3:
+                    number = 3
+                elif event.key == pygame.K_KP4 or event.key == pygame.K_4:
+                    number = 4
+                elif event.key == pygame.K_KP5 or event.key == pygame.K_5:
+                    number = 5
+                elif event.key == pygame.K_KP6 or event.key == pygame.K_6:
+                    number = 6
+                elif event.key == pygame.K_KP7 or event.key == pygame.K_7:
+                    number = 7
+                elif event.key == pygame.K_KP8 or event.key == pygame.K_8:
+                    number = 8
+                elif event.key == pygame.K_KP9 or event.key == pygame.K_9:
+                    number = 9
+                elif event.key == pygame.K_DELETE or event.key == pygame.K_BACKSPACE:
+                    number = 0
+                else:
+                    number = None
+
+                if number is not None:
+                    if is_valid(grid, selected_row, selected_col, number):
+                        grid[selected_row][selected_col] = number
+                    else:
+                        # Display an error message if the input is invalid
+                        error_font = pygame.font.Font(None, 24)
+                        error_text = error_font.render("Invalid input!", True, pygame.Color('red'))
+                        window_surface.blit(error_text, (650, 550))
+                        pygame.display.flip()
+                        pygame.time.wait(1000)  # Wait for 1 second to display the error message
+
+                # Reset the selected cell
+                selected_row = None
+                selected_col = None
 
     # Handle interaction with the puzzle here
     if pygame.mouse.get_pressed()[0]:
